@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Function to handle teddy bear fade animations
     function fadeInOutTeddy(teddy) {
-        if (fadeCount < 3) { // Three fades for better control
+        if (fadeCount < 500) { // Three fades for better control
             teddy.style.opacity = '1';
             setTimeout(() => {
                 teddy.style.opacity = '0';
