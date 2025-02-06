@@ -7,7 +7,7 @@ body {
     align-items: center;
     background: linear-gradient(to bottom, #FFB6C1, #FF69B4);
     overflow: hidden;
-    font-family: 'Lobster Two', cursive;
+    font-family: 'Indie Flower', cursive; /* Updated to match your font import */
 }
 
 #heart-container {
@@ -20,7 +20,6 @@ body {
 .heart, .fade-heart {
     position: absolute;
     transform: rotate(45deg);
-    animation: fadeInOut 3s linear infinite;
     opacity: 0;
 }
 
@@ -28,8 +27,7 @@ body {
     width: 20px;
     height: 20px;
     background-color: #FFF;
-    animation-name: floatUp;
-    animation-duration: 5s;
+    animation: floatUp 5s linear infinite;
 }
 
 .heart::before, .heart::after {
@@ -53,6 +51,7 @@ body {
     width: 50px;
     height: 50px;
     background-color: #FF0000;
+    animation: fadeInOut 3s linear infinite;
 }
 
 .fade-heart::before, .fade-heart::after {
@@ -76,36 +75,66 @@ body {
     text-align: center;
     z-index: 10;
     color: white;
+    
 }
 
 #valentine-text {
     font-size: 3em;
     opacity: 0;
-    animation: fadeIn 3s forwards 1s;
+    animation: fadeIn 6s forwards 1s;
+    position: relative;
+    top: -50%;
+    color: black;
+}
+
+#valentine-text:hover {
+    color: #990e0e;
+    text-shadow: 0 0 10px #ff0000;
+    transition: color 0.5s, text-shadow 0.5s;
 }
 
 #personal-message {
     font-size: 1.5em;
     margin-top: 20px;
+    color: black;
 }
 
-button {
-    font-family: 'Lobster Two', cursive;
-    font-size: 1.2em;
-    padding: 10px 20px;
-    margin: 10px;
+.btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    border: 2px solid #ff6b81;
+    border-radius: 10px;
     cursor: pointer;
-    border: none;
-    border-radius: 5px;
+    transition: all 0.3s ease;
+    background-color: #ff6b81;
+    color: white;
+    margin: 0 20px;
+    font-family: 'Indie Flower', cursive;
+    box-shadow: 0 4px 10px rgba(255, 107, 129, 0.3);
+    position: relative; /* Required for button movement */
+}
+
+.btn:hover {
+    background-color: white;
+    color: #ff6b81;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 107, 129, 0.4);
 }
 
 #yes-button {
-    background-color: #FFC0CB;
+    background-color: #2ecc71; /* Green for positive action */
+    border-color: #2ecc71;
 }
 
 #no-button {
-    background-color: #FFC0CB;
-    position: relative;
+    background-color: #ff4757; /* Red for negative action */
+    border-color: #ff4757;
+    position: absolute; /* Required for random movement */
+}
+
+#no-button:hover {
+    background-color: white;
+    color: #ff4757;
 }
 
 #mute-button {
@@ -113,6 +142,38 @@ button {
     bottom: 20px;
     right: 20px;
     z-index: 11;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.teddy {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+
+#teddy-left {
+    left: 20px;
+    top: 10%;
+    background-image: url('teds.jpg'); /* Ensure path is correct */
+}
+
+#teddy-right {
+    right: 20px;
+    top: 80%;
+    background-image: url('teds.jpg'); /* Ensure path is correct */
+}
+
+.wiggle {
+    animation: wiggle 0.5s ease-in-out;
 }
 
 .crying-emoji {
@@ -136,13 +197,13 @@ button {
 }
 
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes fadeInOut {
-    0%, 100% {opacity: 0;}
-    50% {opacity: 1;}
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
 }
 
 @keyframes floatAway {
@@ -156,6 +217,14 @@ button {
     }
 }
 
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
 @media (max-width: 768px) {
     #valentine-text {
         font-size: 2em;
@@ -163,54 +232,20 @@ button {
     #personal-message {
         font-size: 1em;
     }
+    .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
 }
-/* Existing styles remain... */
-
-#valentine-text:hover {
-    color: #FFD700;
-    text-shadow: 0 0 10px #FFD700;
-    transition: color 0.5s, text-shadow 0.5s;
-}
-
-.confetti {
+#gif-container {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #FF69B4;
-    border-radius: 50%;
-    animation: fall 5s linear;
-    pointer-events: none;
+    bottom: 100px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; /* Below text and buttons but above any background elements */
 }
 
-@keyframes fall {
-    0% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(100vh);
-    }
-}
-/* Existing styles remain... */
-
-.teddy {
-    position: fixed;
-    width: 150px; /* Adjust based on your image size */
-    height: 150px; /* Adjust based on your image size */
-    background-size: cover;
-    opacity: 0.55;
-    transition: opacity cubic-bezier(0.445, 0.05, 0.55, 0.95);
-}
-
-#teddy-left {
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-image: url('teds.jpg'); 
-}
-
-#teddy-right {
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-image: url('teds.jpg'); 
+#valentine-gif {
+    max-width: 200px; /* Adjust based on your page layout */
+    height: auto;
 }
