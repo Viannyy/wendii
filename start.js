@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fadeHeart.style.left = `${Math.random() * 100}vw`;
         fadeHeart.style.top = `${Math.random() * 100}vh}`;
         heartContainer.appendChild(fadeHeart);
-        setTimeout(() => fadeHeart.remove(), 3000); // Remove heart after animation
+        setTimeout(() => fadeHeart.remove(), 3000); 
     }
 
     // Hearts follow mouse cursor
@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
             heart.style.top = `${heart.offsetTop + dy}px`;
         });
     });
-
+    
     // Function to handle teddy bear fade animations
     function fadeInOutTeddy(teddy) {
-        if (fadeCount < 3) {
+        if (fadeCount < 3) { // Three fades for better control
             teddy.style.opacity = '1';
             setTimeout(() => {
                 teddy.style.opacity = '0';
@@ -63,12 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Generate hearts at an interval
-    setInterval(createHeart, 1000);
-    setInterval(createFadeHeart, 2000);
+    setInterval(createHeart, 100);
+    setInterval(createFadeHeart, 200);
 
-    // Start teddy bear animations
-    fadeInOutTeddy(teddyLeft);
-    fadeInOutTeddy(teddyRight);
+    // Check if teddy bears exist before animating
+    if (teddyLeft && teddyRight) {
+        fadeInOutTeddy(teddyLeft);
+        fadeInOutTeddy(teddyRight);
+    } else {
+        console.error('One or both teddy bear elements are missing from the DOM.');
+    }
 
     // Audio control
     muteButton.addEventListener('click', () => {
@@ -83,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Button functionalities
     yesButton.addEventListener('click', () => {
-        yesButton.textContent = '😊I love you';
+        yesButton.textContent = '😊ILY';
         yesButton.style.width = '150px';
         
         // Display romantic message
@@ -109,18 +113,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Remove message after 4 seconds
         setTimeout(() => {
             romanticMessage.style.opacity = '0';
-            setTimeout(() => romanticMessage.remove(), 1000); // Ensure it's fully faded out before removal
+            setTimeout(() => {
+                romanticMessage.remove(); // Ensure it's fully faded out before removal
+                // Redirect after the message has been removed
+                window.location.href = 'sweet-reply.html'; 
+            }, 1000);
         }, 6000);
     });
 
-    noButton.addEventListener('click', () => {
-        // Move 'No' button to a random position within the screen
+    noButton.addEventListener('mouseenter', moveButton);
+
+    function moveButton() {
         const screenWidth = window.innerWidth - noButton.offsetWidth;
         const screenHeight = window.innerHeight - noButton.offsetHeight;
         
         noButton.style.left = `${Math.random() * screenWidth}px`;
         noButton.style.top = `${Math.random() * screenHeight}px`;
-        
+        noButton.classList.add('wiggle');
+        noButton.addEventListener('animationend', () => {
+            noButton.classList.remove('wiggle');
+        }, { once: true });
+
+        // Create and animate a heart
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = `${noButton.offsetLeft + noButton.offsetWidth / 2}px`;
+        heart.style.top = `${noButton.offsetTop + noButton.offsetHeight / 2}px`;
+        document.body.appendChild(heart);
+        heart.addEventListener('animationend', () => {
+            heart.remove();
+        }, { once: true });
+
         // Add crying emojis
         for (let i = 0; i < 5; i++) {
             const emoji = document.createElement('span');
@@ -131,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(emoji);
             setTimeout(() => emoji.remove(), 5000); // Remove emoji after animation
         }
-    });
+    }
 
     // Dynamic text effect
     valentineText.addEventListener('mouseenter', () => {
