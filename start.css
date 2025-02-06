@@ -240,7 +240,7 @@ body {
 #gif-container {
     position: absolute;
     bottom: px; /* Adjust as needed */
-    left: 100%;
+    left: 20%;
     transform: translateX(-50%);
     z-index: 1; /* Below text and buttons but above any background elements */
 }
